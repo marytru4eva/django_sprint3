@@ -1,27 +1,38 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.core.validators import MinValueValidator
+from django.utils import timezone
 
 User = get_user_model()
 
 
 class Category(models.Model):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
-    description = models.TextField(verbose_name='Описание')
-    slug = models.SlugField(
-        unique=True, 
-        verbose_name='Идентификатор',
-        help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.'
+    description = models.TextField(
+        verbose_name='Описание',
+        max_length=1000
     )
+    slug = models.SlugField(
+        unique=True,
+        verbose_name='Идентификатор',
+        help_text='Идентификатор страницы для URL; разрешены символы латиницы,'
+        ' цифры, дефис и подчёркивание.'
+    )
+
     is_published = models.BooleanField(
-        default=True, 
+        default=True,
         verbose_name='Опубликовано',
         help_text='Снимите галочку, чтобы скрыть публикацию.'
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Добавлено')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено'
+    )
 
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -30,15 +41,19 @@ class Category(models.Model):
 class Location(models.Model):
     name = models.CharField(max_length=256, verbose_name='Название места')
     is_published = models.BooleanField(
-        default=True, 
+        default=True,
         verbose_name='Опубликовано',
         help_text='Снимите галочку, чтобы скрыть публикацию.'
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Добавлено')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено'
+    )
 
     class Meta:
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -49,7 +64,9 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
         verbose_name='Дата и время публикации',
-        help_text='Если установить дату и время в будущем — можно делать отложенные публикации.'
+        validators=[MinValueValidator(limit_value=timezone.now)],
+        help_text='Если установить дату и время в будущем — '
+        'можно делать отложенные публикации.'
     )
     author = models.ForeignKey(
         User,
@@ -73,15 +90,31 @@ class Post(models.Model):
         related_name='posts'
     )
     is_published = models.BooleanField(
-        default=True, 
+        default=True,
         verbose_name='Опубликовано',
         help_text='Снимите галочку, чтобы скрыть публикацию.'
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Добавлено')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено'
+    )
 
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        ordering = ['-pub_date']
+        indexes = [
+            models.Index(fields=['-pub_date']),
+            models.Index(fields=['is_published', 'pub_date']),
+            models.Index(fields=['category', 'is_published']),
+        ]
 
     def __str__(self):
         return self.title
+
+    def is_actual(self):
+        """Проверяет, опубликован ли пост и наступила ли дата публикации"""
+        return self.is_published and self.pub_date <= timezone.now()
+
+    is_actual.boolean = True
+    is_actual.short_description = 'Актуально'
