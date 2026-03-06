@@ -1,4 +1,4 @@
-# from pathlib import Path
+from pathlib import Path
 from pathlib import Path
 import sys
 # import os
@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     # 'ice_cream',
     'blog',
     'pages',
+    'contest',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [

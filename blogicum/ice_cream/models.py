@@ -1,11 +1,11 @@
-#from django.db import models
+# from django.db import models
 
 
 # Категории
-#class Category(models.Model):
-    #is_published = models.BooleanField(
-      #  default=True,
-     #   verbose_name='Опубликовано'
+# class Category(models.Model):
+    # is_published = models.BooleanField(
+    #  default=True,
+    # verbose_name='Опубликовано'
     #)
     #title = models.CharField(
       #  max_length=256,
@@ -116,9 +116,11 @@
  #       related_name='ice_cream'
 #    )
 
+
   #  class Meta:
  #       verbose_name = 'мороженое'
 #        verbose_name_plural = 'Мороженое'
+
 
    # def __str__(self):
        # return self.title
