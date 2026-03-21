@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.utils import timezone
-from .models import Post, Category, Location
+from .models import Post, Category
 
 
 def index(request):
