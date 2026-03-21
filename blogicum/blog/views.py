@@ -41,4 +41,8 @@ def category_posts(request, category_slug):
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'blog/category.html', {'category_slug': category_slug, 'page_obj': page_obj})
+    return render(request, 'blog/category.html', {
+        'category': category,
+        'category_slug': category_slug,
+        'page_obj': page_obj
+    })
