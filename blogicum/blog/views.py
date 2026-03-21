@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
-from .models import Post, Category
+from django.utils import timezone
+from .models import Post, Category, Location
 
 
 def index(request):
     post_list = Post.objects.filter(
         is_published=True,
         category__is_published=True,
-        pub_date__isnull=False
+        pub_date__lte=timezone.now()
     ).order_by('-pub_date')
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
@@ -20,7 +21,7 @@ def post_detail(request, post_id):
         Post.objects.filter(
             is_published=True,
             category__is_published=True,
-            pub_date__isnull=False
+            pub_date__lte=timezone.now()
         ),
         id=post_id
     )
@@ -36,7 +37,7 @@ def category_posts(request, category_slug):
     post_list = Post.objects.filter(
         category=category,
         is_published=True,
-        pub_date__isnull=False
+        pub_date__lte=timezone.now()
     ).order_by('-pub_date')
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
