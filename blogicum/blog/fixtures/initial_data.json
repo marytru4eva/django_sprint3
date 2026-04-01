@@ -2419,7 +2419,7 @@
   "pk": 5,
   "fields": {
     "password": "pbkdf2_sha256$260000$7o74Y3RRi1lULzGd7Zi1RS$DN+sAlEURBF+DgG1fkpGF+lqMwMXoZ+tTTy5cW1zhgg=",
-    "last_login": null,
+    "last_login": "2026-04-01T14:03:07.271Z",
     "is_superuser": true,
     "username": "Admin123",
     "first_name": "",
@@ -2502,6 +2502,14 @@
   "fields": {
     "app_label": "blog",
     "model": "location"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4bd2woek5otaq9l6d3ac2f8j15vnivv6",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCwMFCX7j0DGWZAqgaS0q6Md7dNutDte-__twi4LiWsPc1hYnERVpx-WUR6proLfmC9N0mtLvMU5Z7Iw3Z5a5xe16P9OyjYy7Y27BiZtPcUTbaoETBnbfM5MTE4cAa9VYOCIY-ghjFFyqgi6A0BevH5Ag2YOGA:1w7w9z:habvvS2JieS--jCuI6VA44N3Pz8MPP60xFQmqY80YVk",
+    "expire_date": "2026-04-15T14:03:07.279Z"
   }
 },
 {
