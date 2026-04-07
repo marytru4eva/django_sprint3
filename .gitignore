@@ -148,3 +148,13 @@ dmypy.json
 # папки со статикой и медиа
 media/venv_new/
 venv_new/
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/

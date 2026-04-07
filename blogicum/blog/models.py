@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Location(models.Model):
@@ -70,7 +73,7 @@ class Post(models.Model):
         ' можно делать отложенные публикации.'
     )
     author = models.ForeignKey(
-        'auth.User',
+        User,
         on_delete=models.CASCADE,
         verbose_name='Автор публикации'
     )
@@ -85,7 +88,6 @@ class Post(models.Model):
         Category,
         on_delete=models.SET_NULL,
         null=True,
-        blank=False,
         verbose_name='Категория'
     )
     is_published = models.BooleanField(
@@ -95,10 +97,6 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='Добавлено'
-    )
-
-    class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
 
