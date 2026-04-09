@@ -42,7 +42,7 @@
       <div class="container py-5">
         <h1>Лента записей</h1>                        
         <!-- Перебираем в цикле все посты -->
-        {% for post in posts reversed %}
+        {% for post in post_list %}
         <hr>
         <article>
           <ul>
@@ -50,7 +50,7 @@
               Место: {{ post.location }}              
             </li>
             <li>
-              Дата: {{ post.date }}
+              Дата: {{ post.pub_date|date:"d E Y" }}
             </li>
             <li>
               Категория: {{ post.category }}
@@ -60,7 +60,7 @@
           <p>
             {{ post.text|truncatewords:10 }}
           </p>
-          <a href="#">Читать полный текст</a>
+          <a href="{% url 'post_detail' post.pk %}">Читать полный текст</a>
         </article>
         {% endfor %}                 
       </div>

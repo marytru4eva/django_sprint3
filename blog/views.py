@@ -9,7 +9,10 @@ def index(request):
         category__is_published=True,
         pub_date__lte=timezone.now()
     ).order_by('-pub_date')[:5]
-    return render(request, 'blog/index.html', {'post_list': post_list})
+    context = {
+        'post_list': post_list,
+    }
+    return render(request, 'blog/index.html', context)
 
 
 def post_detail(request, pk):
@@ -20,7 +23,10 @@ def post_detail(request, pk):
         category__is_published=True,
         pub_date__lte=timezone.now()
     )
-    return render(request, 'blog/detail.html', {'post': post})
+    context = {
+        'post': post,
+    }
+    return render(request, 'blog/detail.html', context)
 
 
 def category_posts(request, category_slug):
@@ -34,7 +40,8 @@ def category_posts(request, category_slug):
         is_published=True,
         pub_date__lte=timezone.now()
     ).order_by('-pub_date')
-    return render(request, 'blog/category.html', {
+    context = {
         'category': category,
-        'post_list': post_list
-    })
+        'post_list': post_list,
+    }
+    return render(request, 'blog/category.html', context)
