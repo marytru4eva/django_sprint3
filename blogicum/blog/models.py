@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -42,9 +42,8 @@ class Category(models.Model):
     slug = models.SlugField(
         unique=True,
         verbose_name='Идентификатор',
-        help_text='Идентификатор страницы для URL; '
-        'разрешены символы латиницы, цифры, дефис и подчёркивание.'
-                  'цифры, дефис и подчёркивание.'
+        help_text='Идентификатор страницы для URL;'
+        ' разрешены символы латиницы, цифры, дефис и подчёркивание.'
     )
 
     is_published = models.BooleanField(
