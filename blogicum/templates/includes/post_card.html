@@ -1,0 +1,10 @@
+<hr>
+<article>
+  <ul>
+    <li>{{ post.pub_date|date:"d E Y" }} | {% if post.location and post.location.is_published %}{{ post.location.name }}{% else %}Планета Земля{% endif %}</li>
+    <li>От автора @{{ post.author.username }} в категории {% include "includes/category_link.html" %}</li>
+  </ul>
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.text|truncatewords:10 }}</p>
+  <a href="{% url 'post_detail' post.pk %}">Читать полный текст</a>
+</article>
